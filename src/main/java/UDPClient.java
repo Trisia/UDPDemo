@@ -8,8 +8,11 @@ import java.net.InetAddress;
  * create by Cliven on 2018-05-27 22:36
  */
 public class UDPClient {
-    private static final int TIMEOUT = 5000;  //设置接收数据的超时时间
-    private static final int MAXNUM = 5;      //设置重发数据的最多次数
+    //设置接收数据的超时时间
+    private static final int TIMEOUT = 5000;
+    //设置重发数据的最多次数
+    private static final int MAXNUM = 5;
+
     public static void main(String args[])throws IOException {
         String str_send = "Hello UDPserver";
         byte[] buf = new byte[1024];
@@ -17,13 +20,17 @@ public class UDPClient {
         DatagramSocket ds = new DatagramSocket(9000);
         InetAddress loc = InetAddress.getLocalHost();
         //定义用来发送数据的DatagramPacket实例
+        //数据发向本地3000端口
         DatagramPacket dp_send= new DatagramPacket(str_send.getBytes(),str_send.length(),loc,3000);
         //定义用来接收数据的DatagramPacket实例
         DatagramPacket dp_receive = new DatagramPacket(buf, 1024);
-        //数据发向本地3000端口
-        ds.setSoTimeout(TIMEOUT);              //设置接收数据时阻塞的最长时间
-        int tries = 0;                         //重发数据的次数
-        boolean receivedResponse = false;     //是否接收到数据的标志位
+
+        //设置接收数据时阻塞的最长时间
+        ds.setSoTimeout(TIMEOUT);
+        //重发数据的次数
+        int tries = 0;
+        //是否接收到数据的标志位
+        boolean receivedResponse = false;
         //直到接收到数据，或者重发次数达到预定值，则退出循环
         while(!receivedResponse && tries<MAXNUM){
             //发送数据
